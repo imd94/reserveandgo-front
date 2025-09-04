@@ -1,0 +1,7 @@
+.env
+.env.preview_prod
+.env.dev
+.env.prod
+node_modules/
+README-template.md
+style-guide.md
