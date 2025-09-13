@@ -1,29 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+//import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Axios from 'axios';
+
+// Styles
 import './assets/styles/styles.scss';
 
 Axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 // Components
-
+import { ReservationProvider } from './components/ReservationContext'
+import Reservation from './components/Reservation';
 
 function App(props) {
   return (
-    <>
-      <header>
-        <h1>Header</h1>
-        <img src={ `${process.env.REACT_APP_FILE_PATH_DIST}assets/images/bg-desktop-dark.jpg` } alt="Hero Image" />
-      </header>
-
-      <main>
-        Main
-      </main>
-
-      <footer>
-        Footer
-      </footer>
-    </>
+    <ReservationProvider>
+      <Reservation />
+    </ReservationProvider>
   );
 }
 

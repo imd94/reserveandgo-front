@@ -3,5 +3,6 @@
 .env.dev
 .env.prod
 node_modules/
+docs/
 README-template.md
 style-guide.md

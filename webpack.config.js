@@ -8,7 +8,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fse = require("fs-extra");
 
-let cssConfig = {
+// SCSS configuration
+let scssConfig = {
   test: /\.s[ac]ss$/i,
   use: [
     'css-loader?url=false',
@@ -18,6 +19,15 @@ let cssConfig = {
         sourceMap: true
       } 
     }
+  ]
+}
+
+// NEW: CSS configuration for node_modules
+let cssConfig = {
+  test: /\.css$/i,
+  include: /node_modules/,
+  use: [
+    'css-loader?url=false'
   ]
 }
 
@@ -59,7 +69,8 @@ config = {
           },
         },
       },
-      cssConfig
+      scssConfig,  // Use the SCSS config
+      cssConfig    // Use the CSS config
     ],
   },
 }
@@ -67,10 +78,11 @@ config = {
 if (currentTask == "webpackDev") {
   //cssConfig.use.unshift('style-loader')
   dotenv.config({ path: './.env.dev' });
-  cssConfig.use.unshift(MiniCssExtractPlugin.loader)
+  scssConfig.use.unshift(MiniCssExtractPlugin.loader);
+  cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.devtool = "source-map"
   config.devServer = {
-    port: 3000,
+    port: 4000,
     static: {
       directory: path.join(__dirname, "app")
     },
@@ -91,7 +103,8 @@ if (currentTask == "webpackDev") {
 
 if (currentTask == "webpackBuild") {
   dotenv.config({ path: './.env.prod' });
-  cssConfig.use.unshift(MiniCssExtractPlugin.loader)
+  scssConfig.use.unshift(MiniCssExtractPlugin.loader);
+  cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production"
   config.output = {
     publicPath: process.env.REACT_APP_FILE_PATH_DIST,
@@ -111,7 +124,8 @@ if (currentTask == "webpackBuild") {
 
 if(currentTask == 'webpackLocalBuild') {
   dotenv.config({ path: './.env.dev' });
-  cssConfig.use.unshift(MiniCssExtractPlugin.loader)
+  scssConfig.use.unshift(MiniCssExtractPlugin.loader);
+  cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "development"
   config.output = {
     publicPath: '/',
