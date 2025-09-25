@@ -1,3 +1,11 @@
+@use "normalize.css";
+
+// Base
 @use "base/colors";
 @use "base/global";
 @use "base/utilities";
+
+// Components
+@use "components/base";
+@use "components/reservation";
+@use "components/calendar";

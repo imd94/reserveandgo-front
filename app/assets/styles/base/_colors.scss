@@ -2,5 +2,31 @@
 :root {
   --white: #fff;
   --black: #000;
+
+  --primary: #0278ae;
+  --primary_light: #00a3ee;
+
+  --text_B1B1B1: #B1B1B1;
+  --text_7e7e7e: #7e7e7e;
+  --text_464a53: #464a53;
+  --text_3d4465: #3d4465;
+  --text_161824: #161824;
+  --text_292F34: #292F34;
+
+  --gray_f1: #f1f1f1;
+  --gray_f7: #f7f7f7;
+  --gray_f9f9f9: #f9f9f9;
+  --gray_F4F5F9: #F4F5F9;
+  --gray_bccbda: #bccbda;
+  --gray_fcfdff: #F8FBFF;
+
+  // rgb
+  --white-rgb: 255, 255, 255;
+  --black-rgb: 0, 0, 0;
+}
+
+.rdp-root {
+  --rdp-accent-color: var(--primary) !important; // default: blue
+  --rdp-disabled-opacity: 0.3 !important;
 }
 

@@ -14,7 +14,7 @@ html {
 
 body {
   box-sizing: border-box;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 1.6rem;
   position: relative;
@@ -23,6 +23,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 2rem;
+  font-weight: 700;
+  color: var(--text_161824);
 }
 
 p {
@@ -44,4 +46,20 @@ img {
 
 main {
   flex-grow: 1;
+}
+
+ul, ol {
+  list-style-type: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text_7e7e7e);
+}
+
+.page-wrapper {
+  height: 100%;
 }
