@@ -1,31 +1,60 @@
+@use "../base/mixins" as *;
+
 .rdp-root {
+
+  .rdp-months {
+    @include md {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
   .rdp-month {
     border: .1rem solid rgba(188, 203, 218, 0.5);
-    border-radius: 1.5rem;
+    border-radius: .75rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     background-color: var(--white);
+
+    @include md {
+      width: 100%;
+    }
+
+    &_grid {
+      @include md {
+        width: 100%;
+      }
+    }
   }
 
   .rdp-month_caption {
     padding: 1rem 2rem;
     height: 4.1rem;
-    background-color: #EBF0F4;
-    border-top-left-radius: 1.5rem;
-    border-top-right-radius: 1.5rem;
+    //background-color: #EBF0F4;
+    background-color: var(--text_3d4465);
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem;
     justify-content: center;
   }
 
   .rdp-dropdown_root {
     font-size: 1.6rem;
-    color: var(--text_292F34);
+    //color: var(--text_292F34);
+    color: var(--white);
   }
 
   .rdp-caption_label {
     padding: .5rem;
+    text-transform: capitalize;
   }
 
   .rdp-dropdown:focus-visible ~ .rdp-caption_label {
     outline: 1px solid var(--primary);
     border-radius: .25rem;
+  }
+
+  .rdp-dropdown {
+    text-transform: capitalize;
   }
 
   .rdp-dropdown option {
@@ -61,6 +90,10 @@
 
   .rdp-day_button {
     color: #67777E;
+
+    @include md {
+      display: inline-block;
+    }
   }
 
   .rdp-nav {

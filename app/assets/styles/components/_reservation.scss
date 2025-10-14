@@ -1,5 +1,7 @@
+@use "../base/mixins" as *;
+
 .rag-reservation {
-  padding: 7rem 2rem;
+  padding: 7rem 2rem 15rem;
   background-color: var(--gray_fcfdff);
   position: relative;
 
@@ -12,9 +14,43 @@
   &__field-group {
     margin-bottom: 2rem;
 
-    &.field-group--note,
-    &.field-group--apartment {
-      grid-column: 1 / -1;
+    &--cols-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+    }
+  }
+
+  .field-group {
+    &--checkintime {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      left: -10000px;
+      top: -10000px;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+
+    &--note {
+      textarea {
+        resize: none;
+      }
+    }
+  }
+
+  .reservation-input {
+    @include lg {
+      padding: 1.1rem 1.5rem;
+    }
+
+    &.has-error {
+      border-color: #ed3548;
+    }
+
+    &[disabled] {
+      background-color: var(--gray_fcfdff);
     }
   }
 
@@ -23,18 +59,33 @@
     grid-template-columns: max-content 1fr;
     align-items: start;
     gap: 5rem;
+
+    @include lg {
+      gap: 2.5rem;
+    }
+
+    @include md {
+      grid-template-columns: 1.3fr 1fr;
+    }
+
+    @include sm {
+      grid-template-columns: 100%;
+    }
   }
 
   &__form-fields {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     align-items: start;
     column-gap: 2rem;
+    position: relative;
+
+    @include lg {
+      grid-template-columns: 100%;
+    }
   }
 
   .footer-text {
-    display: flex;
-    align-items: center;
     text-align: center;
     position: absolute;
     bottom: 2rem;
@@ -43,7 +94,261 @@
     margin: 0;
   }
 
-  &__confiramtion-form {
+  .footer-credits {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .75rem;
+  }
+
+  .recaptcha-notice {
+    font-size: 1.4rem;
+    color: var(--text_3d4465);
+
+    a {
+      color: var(--primary);
+    }
+  }
+
+  &__info {
+    background-color: var(--text_3d4465);
+    color: var(--white);
+    border-radius: .5rem;
+    padding: 1.5rem 2.5rem;
+    position: relative;
+  }
+
+  .calendar-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .date-label {
+    font-weight: 700;
+    display: block;
+    margin: 0 0 1rem;
+    color: var(--text_3d4465);
+  }
+
+  .price-info {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: var(--white);
+
+    > span {
+      display: inline-block;
+    }
+
+    &.total {
+      @include xxs {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .regular-price {
+    &.has-discount {
+      font-size: 1.6rem;
+      position: relative;
+      opacity: .7;
+      //text-decoration: line-through;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: .9rem;
+        left: -4px;
+        display: block;
+        background-color: var(--white);
+        height: .1rem;
+        width: calc(100% + 8px);
+      }
+    }
+  }
+
+  .regular-price-with-discount,
+  .regular-price,
+  .num-nights,
+  .total-price {
+    font-size: 2.6rem;
+  }
+
+  .price-info-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
+
+    @include xxs {
+      display: block;
+    }
+
+    &.period {
+      @include md {
+        display: block;
+      }
+    }
+  }
+
+  .btn-clear {
+    font-size: 1.5rem;
+    border: .1rem solid var(--white);
+    border-radius: .5rem;
+    padding: .5rem 1.5rem;
+    position: absolute;
+    top: 1.25rem;
+    right: 2.5rem;
+    color: var(--white);
+
+    @include xxs {
+      font-size: 1.3rem;
+      padding: .5rem 1rem;
+      top: auto;
+      bottom: 1.25rem;
+      right: 1.5rem;
+      background-color: var(--text_3d4465);
+    }
+  }
+
+  .date-from,
+  .date-to {
+    text-transform: capitalize;
+
+    @include md {
+      font-weight: 700;
+    }
+  }
+
+  .do {
+    @include md {
+      display: block;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .from-label,
+  .to-label {
+    display: none;
+
+    @include md {
+      display: inline;
+    }
+  }
+
+  .submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    &[disabled] {
+      pointer-events: none;
+      opacity: .75;
+    }
+  }
+
+  .reserve-button,
+  .code-confirm-button {
+    font-weight: 900;
+    border-radius: .5rem;
+    background-color: var(--primary_light);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    letter-spacing: .1rem;
+    
+    &:hover,
+    &:active {
+      background-color: var(--primary);
+    }
+  }
+
+  .errors {
+    grid-column: 1 / -1;
+    position: relative;
+    top: -1rem;
+    padding: 1rem 1.5rem;
+    border-radius: .5rem;
+    background-color: #fef2f2;
+
+    &:not(:last-child) {
+      margin-bottom: .75rem;
+    }
+
+    .error-message {
+      font-size: 1.4rem;
+      color: #991b1b; //#ed3548 #991b1b #fef2f2
+
+      &:not(:last-child) {
+        margin-bottom: .75rem;
+      }
+    }
+  }
+
+  .info-flash {
+    grid-column: 1 / -1;
+    position: relative;
+    top: -1rem;
+    padding: 1rem 1.5rem;
+    border-radius: .5rem;
+    background-color: #F1FBF7; // #D3F2E5
+
+    &:not(:last-child) {
+      margin-bottom: .75rem;
+    }
+
+    .success-message {
+      font-size: 1.4rem;
+      color: #0f5132; //#ed3548 #991b1b #fef2f2
+
+      &:not(:last-child) {
+        margin-bottom: .75rem;
+      }
+    }
+  }
+
+  .reservation-confirm {
     text-align: center;
+
+    &__header {
+      max-width: 100rem;
+      margin: 0 auto;
+      margin-bottom: 5rem;
+    }
+
+    &__heading {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    &__text {
+      line-height: 1.5;
+    }
+
+    .generate-new-code-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--primary);
+      text-decoration: underline;
+
+      &.loader-active {
+        pointer-events: none;
+        opacity: .8;
+      }
+    }
+
+    &__code-input {
+      font-size: 5rem;
+      font-weight: 900;
+      padding: .5rem 1rem;
+      width: 25rem;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--primary);
+    }
+    
   }
 }

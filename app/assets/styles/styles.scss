@@ -2,6 +2,7 @@
 
 // Base
 @use "base/colors";
+@use "base/fonts";
 @use "base/global";
 @use "base/utilities";
 
@@ -9,3 +10,5 @@
 @use "components/base";
 @use "components/reservation";
 @use "components/calendar";
+@use "components/alert";
+@use "components/spinner";

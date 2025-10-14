@@ -5,6 +5,7 @@
 
   --primary: #0278ae;
   --primary_light: #00a3ee;
+  --primary_focus: #86b7fe;
 
   --text_B1B1B1: #B1B1B1;
   --text_7e7e7e: #7e7e7e;
@@ -18,6 +19,7 @@
   --gray_f9f9f9: #f9f9f9;
   --gray_F4F5F9: #F4F5F9;
   --gray_bccbda: #bccbda;
+  --gray_9fabb8: #9fabb8;
   --gray_fcfdff: #F8FBFF;
 
   // rgb
@@ -26,7 +28,7 @@
 }
 
 .rdp-root {
-  --rdp-accent-color: var(--primary) !important; // default: blue
+  --rdp-accent-color: var(--primary_light) !important; // default: blue
   --rdp-disabled-opacity: 0.3 !important;
 }
 

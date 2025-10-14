@@ -29,6 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin: 0 0 2rem;
+  color: var(--text_3d4465);
 }
 
 img {
@@ -62,4 +63,9 @@ a {
 
 .page-wrapper {
   height: 100%;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
 }

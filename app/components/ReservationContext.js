@@ -9,36 +9,75 @@ const initialState = {
     from: undefined,
     to: undefined
   },
-  ownerId: '8bd8f46c-0f5d-4b61-a93a-a16a7848e6f0',
+  regularPrice: '',
+  discount: '',
+  displayRange: '',
+  numNights: '',
+  regularPriceWithDiscount: '',
+  totalPrice: '',
+  ownerId: 'c1abadd3-4cea-4fab-9359-aaa4a074c670', //f167dd2d-0add-4f7c-a3d1-0b6c86cde745
   ownerAccommodations: [],
   ownerAccommodationsSelected: '',
   ownerInfo: {},
-  guest: {
-    id: '',
-    fullName: '',
-    email: '',
-    phone: ''
-  },
   submitCounter: 0,
   confirmReservationCounter: 0,
   resendConfirmationCodeCounter: 0,
+  verifiedReservationCreated: false,
+  verifiedReservationSuccessMessage: '',
   isReservationCreated: Boolean(localStorage.getItem('reservationId')),
   reservationId: localStorage.getItem('reservationId'),
   reservationConfirmed: false,
+  reservationConfirmedSuccessMessage: '',
+  reservationConfirmedFailedMessage: '',
+  reservationErrors: [],
+  reservationConfirmedErrors: [],
+  reservationResendCodeErrors: [],
+  reservationResendCodeInfo: [],
+  reservationOperationalErrors: [],
+  loader: {
+    submitReservation: false,
+    submitReservationConfirm: false,
+    submitNewCode: false,
+    emailCheck: false
+  }
 }
 
 function ourReducer(draft, action) {
   switch (action.type) {
     case "getRange":
       draft.range = action.value
+      const newErrors = draft.reservationErrors.filter(error => !error.hasOwnProperty('fullName'));
+      draft.reservationErrors = newErrors;
       return;
     case "resetRange":
       draft.range.from = undefined;
       draft.range.to = undefined;
       return;
+    case "setRegularPrice":
+      draft.regularPrice = action.value;
+      return;
+    case "setDiscount":
+      draft.discount = action.value;
+      return;
+    case "setDisplayRange":
+      draft.displayRange = action.value;
+      return;
+    case "setRegularPriceWithDiscount":
+      draft.regularPriceWithDiscount = action.value;
+      return;
+    case "setNumNights":
+      draft.numNights = action.value;
+      return;
+    case "setTotalPrice":
+      draft.totalPrice = action.value;
+      return;
     case "getOwnerAccommodations":
       draft.ownerAccommodations = action.value;
-      draft.ownerAccommodationsSelected = action.value[0].id;
+      if(draft.ownerAccommodations.length > 1) {
+        draft.ownerAccommodationsSelected = '';
+      } else {
+        draft.ownerAccommodationsSelected = action.value[0].id;
+      }
       return;
     case "selectAccommodation":
       draft.ownerAccommodationsSelected = action.value;
@@ -54,12 +93,101 @@ function ourReducer(draft, action) {
       draft.isReservationCreated = false;
       draft.reservationId = '';
       return;
+    case "reservationConfirmedSuccessMessage":
+      draft.reservationConfirmedSuccessMessage = action.successMessage;
+      return;
+    case "reservationConfirmedFailedMessage":
+      draft.reservationConfirmedFailedMessage = action.failedMessage;
+      return;
     case "reservationCreated":
       draft.isReservationCreated = true;
       draft.reservationId = action.value;
+      draft.range.from = undefined;
+      draft.range.to = undefined;
+      return;
+    case "reservationCreatedAndDispatched":
+      draft.verifiedReservationCreated = true;
+      draft.verifiedReservationSuccessMessage = action.value;
+      draft.range.from = undefined;
+      draft.range.to = undefined;
+      return;
+    case "reservationErrors":
+      draft.reservationErrors = action.value;
+      return;
+    case "reservationConfirmedErrors":
+      if(action.value && action.value.length) {
+        draft.reservationConfirmedErrors.push(...action.value);
+      }
+
+      if(action.message) {
+        draft.reservationConfirmedErrors.push(action.message);
+      }
+
+      if(action.resetErrors) {
+        draft.reservationConfirmedErrors = [];
+      }
+      return;
+    case "reservationResendCodeErrors": 
+      if(action.message) {
+        draft.reservationResendCodeErrors.push(action.message);
+      }
+
+      if(action.resetErrors) {
+        draft.reservationResendCodeErrors = [];
+      }
+      return;
+
+    case "reservationResendCodeInfo": 
+      if(action.message) {
+        draft.reservationResendCodeInfo.push(action.message);
+      }
+
+      if(action.resetInfo) {
+        draft.reservationResendCodeInfo = [];
+      }
       return;
     case "resendCode":
       draft.resendConfirmationCodeCounter++;
+      return;
+    case "loaderStart":
+      if(action.value === 'submitReservation') {
+        draft.loader.submitReservation = true;
+      }
+
+      if(action.value === 'submitReservationConfirm') {
+        draft.loader.submitReservationConfirm = true;
+      }
+
+      if(action.value === 'submitNewCode') {
+        draft.loader.submitNewCode = true;
+      }
+
+      if(action.value === 'emailCheck') {
+        draft.loader.emailCheck = true;
+      }
+      return;
+    case "loaderStop":
+      if(action.value === 'submitReservation') {
+        draft.loader.submitReservation = false;
+      }
+
+      if(action.value === 'submitReservationConfirm') {
+        draft.loader.submitReservationConfirm = false;
+      }
+
+      if(action.value === 'submitNewCode') {
+        draft.loader.submitNewCode = false;
+      }
+
+      if(action.value === 'emailCheck') {
+        draft.loader.emailCheck = false;
+      }
+      return;
+    case "operationalErrors":
+      draft.reservationOperationalErrors.push(action.message);
+      return;
+    case "clearOperationalErrors":
+      draft.reservationOperationalErrors = [];
       return;
   }
 }
